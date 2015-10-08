@@ -1,3 +1,7 @@
+# This software is open.
+# Please give credit if you use it:
+# Paul A. Wilson
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import special
