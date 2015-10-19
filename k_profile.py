@@ -92,7 +92,7 @@ fig = plt.figure(figsize=(7,8.5/1.5))
 
 fontlabel_size = 19
 tick_size = 19
-params = {'backend': 'wxAgg', 'lines.markersize' : 2, 'axes.labelsize': fontlabel_size, 'text.fontsize': fontlabel_size, 'legend.fontsize': fontlabel_size, 'xtick.labelsize': tick_size, 'ytick.labelsize': tick_size, 'text.usetex': True}
+params = {'backend': 'wxAgg', 'lines.markersize' : 2, 'axes.labelsize': fontlabel_size, 'font.size': fontlabel_size, 'legend.fontsize': fontlabel_size, 'xtick.labelsize': tick_size, 'ytick.labelsize': tick_size, 'text.usetex': True}
 plt.rcParams.update(params)
 plt.rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
 ax=fig.add_subplot(1,1,1)
