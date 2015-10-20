@@ -1,6 +1,15 @@
-AstroCode
+K-profile
 =========
 
-Here is a collection of pieces of code I use to study the Potassium line in exoplanet atmospheres.
+K_profile.py - Creates a model Potassium line under the assumption of a isothermal atmosphere. Uses the equation of Lecavelier des Etangs et al. (2008).
 
-K_profile.py - Creates a model Potassium line under the assumption of a isothermal atmosphere.
+Usage
+-----
+
+Edit the reduciton.json file in the params directory and change the parameters to suit your needs.
+
+To run the program and produce a .pdf output do
+
+```python
+python K_profile.py
+```
