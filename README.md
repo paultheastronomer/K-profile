@@ -13,3 +13,5 @@ To run the program and produce a .pdf output do
 ```python
 python K_profile.py
 ```
+
+![alt tag](https://www.paulanthonywilson.com/download/potassium.png)
