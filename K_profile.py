@@ -24,8 +24,8 @@ def voigt(x, y):
 	return I
 
 def H(nu_,nu,c,k,T,mu_,gamma):
-	v_=nu_/c*np.sqrt(2*k*T/mu_) 	# Doppler
-	u=(nu-nu_)/(v_) 	 	# Normalized Doppler displacement
+	v_=nu_/c*np.sqrt(2*k*T/mu_) # Doppler
+	u=(nu-nu_)/(v_) 	 		# Normalized Doppler displacement
 	a=gamma/(4*np.pi*v_)	 	# Damping Constant
 	H = voigt(u,a)
 	return H,v_
@@ -36,7 +36,7 @@ def crossection(sigma_,H,v_):
 
 def lecavelier(cross_sec,k,T,mu,g,abundance,P_ref,t_eq,Rp):  # Absorption as a function of wavelength
 	H = (k*T)/(mu*g)
-	print "Scale Height: \t\t",round(H/100000.,2)," km"
+	print "\nScale Height: \t\t",round(H/100000.,2)," km\n"
 	return H*np.log(  (abundance*cross_sec*P_ref/t_eq)*np.sqrt(2.*np.pi*Rp/(k*T*mu*g))  )
 
 def main():    
@@ -63,7 +63,7 @@ def main():
 	mu_H2	= u*2 	# g H2 mass
 
 	# K
-	mu_K	= u*39 	# g Na mass
+	mu_K		= u*39 	# g Na mass
 	gamma_K_nu1 = param["K"]["gamma_nu1"] 	# hz Decay Rate Na
 	gamma_K_nu2 = param["K"]["gamma_nu1"] 	# hz Decay Rate Na
 	fd1_k		= param["K"]["fd1"] 		# absorption oscillator strength  - Handbook chemistry and physics
@@ -71,7 +71,7 @@ def main():
 	abundK		= param["K"]["abund"]	# Potassium abundance
 
 	# Wavelength & Frequency Array
-	w_aa = np.arange(7682-500,7682+500,0.01) # Wavelength in Angstrom
+	w_aa = np.arange(param["plotting"]["x min"],param["plotting"]["x max"],0.01) # Wavelength in Angstrom
 	w_cm = w_aa*1e-8  			 # Wavelength in cm
 	nu=c/w_cm 				 # Frequency
 
@@ -92,10 +92,10 @@ def main():
 	sigma_K_voigt=sigma_K_voigt1+sigma_K_voigt2 # Cross Section of Doublet
 
 	cross_sec_K = sigma_K_voigt
+	
+	T = param["system parameters"]["temp"] 	# Temperature
 
-	unbinned_high = lecavelier(cross_sec_K,k,2000.,mu,g,abundK,P_ref,t_eq,Rp)
-	unbinned_med = lecavelier(cross_sec_K,k,1500.,mu,g,abundK,P_ref,t_eq,Rp)
-	unbinned_low = lecavelier(cross_sec_K,k,1000.,mu,g,abundK,P_ref,t_eq,Rp)
+	unbinned = lecavelier(cross_sec_K,k,param["system parameters"]["temp"],mu,g,abundK,P_ref,t_eq,Rp)
 
 	# Plot the data
 	fig = plt.figure(figsize=(7,8.5/1.5))
@@ -108,18 +108,16 @@ def main():
 	ax=fig.add_subplot(1,1,1)
 
 	# Profiles with various temperatures
-	plt.plot(w_aa,(unbinned_high+Rp)/Rs,'-',color='red',linewidth=2.)
-	plt.plot(w_aa,(unbinned_med+Rp)/Rs,'-',color='#FFBC40',linewidth=2.)
-	plt.plot(w_aa,(unbinned_low+Rp)/Rs,'-',color='#375FA9',linewidth=2.)
+	plt.plot(w_aa,(unbinned+Rp)/Rs,'-',color='red',linewidth=2.)
 
-	ax.legend(('2000~K','1500~K','1000~K'),loc='upper left', numpoints = 1)
+	ax.legend((str(T)+" K",),loc='upper left', numpoints = 1)
 
 	plt.minorticks_on()
-	plt.ylim(0.113,0.145)
-	plt.xlim(7681-400,7681+400)
+	plt.xlim(param["plotting"]["x min"],param["plotting"]["x max"])
+	plt.ylim(param["plotting"]["y min"],param["plotting"]["y max"])
 	plt.xlabel('Wavelength [\AA]')
 	plt.ylabel('$R_p / R_*$')
-	plt.savefig('K_profile_temp.pdf',transparent=True, bbox_inches='tight', pad_inches=0.1)
+	plt.savefig(param["plotting"]["pdf output"],transparent=True, bbox_inches='tight', pad_inches=0.1)
 	plt.show()
 	
 if __name__ == '__main__':

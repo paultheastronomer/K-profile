@@ -24,5 +24,12 @@
       "t_eq"				: 0.56,
       "K1"					: 7664.9e-8,
       "K2"					: 7699.0e-8
+    },
+ "plotting" : { 
+      "x min"				: 7350,
+      "x max"				: 8000,
+      "y min"				: 0.113,
+      "y max"				: 0.145,
+      "pdf output"			: "K_profile.pdf"
     }
 }
