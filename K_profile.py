@@ -10,7 +10,7 @@ from scipy import special
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
 def read_params():
-	with open('params/reduction.json') as param_file:    
+	with open('params/parameters.json') as param_file:    
 		param = json.load(param_file)
 	return param
 
